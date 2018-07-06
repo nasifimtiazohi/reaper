@@ -111,7 +111,7 @@ class Attributes(object):
                         args=(project_id, repository_path, cursor, outq)
                     )
                     process.start()
-                    #hardcoding timeout as a quick fix to a bug in reading timeout
+                    #hardcoding timeout as a quick fix to a bug in reading
                     process.join(timeout=21600)
 
                     if not outq.empty():
@@ -145,6 +145,7 @@ class Attributes(object):
 
     def score(self, rresults):
         score = 0
+
         for (attribute, rresult) in rresults.items():
             attribute = self.get(attribute)
 
