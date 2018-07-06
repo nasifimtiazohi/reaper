@@ -111,7 +111,8 @@ class Attributes(object):
                         args=(project_id, repository_path, cursor, outq)
                     )
                     process.start()
-                    #hardcoding timeout as a quick fix to a bug in reading
+                    #hardcoding timeout as a quick fix 
+                    # to a bug in reading the timeout
                     process.join(timeout=21600)
 
                     if not outq.empty():
