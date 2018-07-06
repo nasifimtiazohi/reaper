@@ -104,14 +104,15 @@ class Attributes(object):
                         attribute.reference.init(cursor)
 
                 with self.database.cursor() as cursor:
+                    #this line below has a bug. timeout becomes zero from the second attribute
                     timeout = utilities.parse_datetime_delta(attribute.timeout)
-
                     process = multiprocessing.Process(
                         target=attribute.run,
                         args=(project_id, repository_path, cursor, outq)
                     )
                     process.start()
-                    process.join(timeout=timeout.total_seconds())
+                    #hardcoding timeout as a quick fix to a bug in reading timeout
+                    process.join(timeout=21600)
 
                     if not outq.empty():
                         (bresult, rresult) = outq.get()
@@ -144,7 +145,6 @@ class Attributes(object):
 
     def score(self, rresults):
         score = 0
-
         for (attribute, rresult) in rresults.items():
             attribute = self.get(attribute)
 
